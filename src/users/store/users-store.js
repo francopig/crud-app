@@ -24,14 +24,36 @@ const loadPreviousPage = async() => {
 
 }
 
+/**
+ * 
+ * @param {User} updatedUser 
+ */
+const onUserChanged = ( updatedUser ) => {
+    
+    let wasFound = false;
 
-const onUserChanged = () => {
-    throw new Error('Not implemented');
+    state.users = state.users.map( user => {
+        if( user.id === updatedUser.id){
+            wasFound = true;
+            return updatedUser;
+        }
+        return user;
+    });
+
+    if( state.users.length < 10 && !wasFound ){
+        state.users.push( updatedUser );
+    }
+
 }
 
 
-const reloadPage = () => {
-    throw new Error('Not implemented');
+const reloadPage = async() => {
+    const users = await loadUsersByPage( state.currentPage );
+    if( users.length == 0 ) { //Para el caso de borrar el último registro en la pagina 
+        await loadPreviousPage();
+        return;
+    }; 
+    state.users = users;
 }
 
 
