@@ -13,4 +13,4 @@ npm run server
 npm run dev
 ```
 
-Happy coding!
+Happy coding! 😋
